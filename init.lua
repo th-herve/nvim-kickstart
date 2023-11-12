@@ -1,4 +1,3 @@
----@diagnostic disable: undefined-global
 --  _  _  ____  _____  _  _  ____  __  __
 -- ( \( )( ___)(  _  )( \/ )(_  _)(  \/  )
 --  )  (  )__)  )(_)(  \  /  _)(_  )    (
@@ -858,3 +857,14 @@ vim.cmd([[ highlight StatusLine guibg=none ]])
 vim.cmd([[ highlight StatusLineNC guibg=none ]])
 vim.cmd([[ highlight Folded guibg=none ]])
 vim.cmd([[ highlight MatchParen guibg=none ]])
+
+local function get_file_icon_and_name()
+	local filename = vim.fn.expand("%:t")
+	local extension = vim.fn.expand("%:e")
+
+	local icon, icon_hl = require("nvim-web-devicons").get_icon(filename, extension, { default = true })
+
+	return "%#" .. icon_hl .. "#" .. icon .. "%#WinBar#" .. " " .. filename
+end
+
+vim.o.winbar = get_file_icon_and_name()
